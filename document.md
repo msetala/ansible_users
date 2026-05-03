@@ -51,3 +51,7 @@ display_args_to_stdout = true
 
 - playbookia ajaessa huomattiin, että tulos jäi "changed =1" tilaan. vähän googlatessa huomattiin, että ongelma korjautuu kirjaamalla `main.yml` tiedostoon `update_password: on_create`. vika johtui hashista, joka päivittyi joka kerta playbookia ajaessa muuttaen hashia.
 
+# Lähteet
+- Jeremy Canfield, 2025. | Ansible: create user account: https://www.freekb.net/Article?id=2538
+- Root RouteWay, 2023. | Efficiently Manage Users and Groups with Ansible: A Step-By-Step Guide: https://medium.com/@RootRouteway/efficiently-manage-users-and-groups-with-ansible-a-step-by-step-guide-d72a2b625b60
+- Karvinen, Tero 2026. | Palvelinten hallinta: https://terokarvinen.com/palvelinten-hallinta/
