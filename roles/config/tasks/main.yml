@@ -1,0 +1,11 @@
+- name: create anssi account
+  ansible.builtin.user:
+     name: anssi
+     password: "{{ '%s' | format(password) | regex_replace('\n', '') | password_hash('sha512') }}"
+     state: present
+     shell: /bin/bash
+     home: /home/anssi
+     groups: it
+     uid: 2002
+     append: yes
+     

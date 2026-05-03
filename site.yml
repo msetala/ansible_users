@@ -1,0 +1,6 @@
+- hosts: all
+  become: true
+  vars_files:
+    - roles/config/files/secret.yml
+  roles:
+    - config
