@@ -49,3 +49,5 @@ display_args_to_stdout = true
 - Tähäna asti tehty projekti näyttää seuraavanlaiselta:
 <img width="600" height="276" alt="kuva" src="https://github.com/user-attachments/assets/f717c368-b7ac-4c57-86e1-d2daa42a0ff4" />
 
+- playbookia ajaessa huomattiin, että tulos jäi "changed =1" tilaan. vähän googlatessa huomattiin, että ongelma korjautuu kirjaamalla `main.yml` tiedostoon `update_password: on_create`. vika johtui hashista, joka päivittyi joka kerta playbookia ajaessa muuttaen hashia.
+
