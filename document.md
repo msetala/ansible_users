@@ -58,6 +58,7 @@ Tässä tehtävässä konfiguroin käyttäjän hallinnan Ansiblella. Käyttäjä
 <img width="730" height="194" alt="Näyttökuva 2026-05-05 190451" src="https://github.com/user-attachments/assets/c95e11eb-d52c-4e60-a92e-b49fe8cbe6b4" />
 
 
+
 Ansible playbookin ajo
 
 Ajoin playbookin komennolla:
