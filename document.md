@@ -51,6 +51,40 @@ display_args_to_stdout = true
 
 - playbookia ajaessa huomattiin, että tulos jäi "changed =1" tilaan. vähän googlatessa huomattiin, että ongelma korjautuu kirjaamalla `main.yml` tiedostoon `update_password: on_create`. vika johtui hashista, joka päivittyi joka kerta playbookia ajaessa muuttaen hashia.
 
+## SSH ja sudoless automatisointi
+Lisäsin projektiin SSH-avaimella kirjautumisen sekä sudon käytön ilman salasanaa.
+
+Toteutin tämän Ansible playbookilla, jossa luodaan käyttäjä, lisätään SSH-avain ja määritellään sudo-oikeudet ilman salasanan kyselyä. Tämä mahdollistaa turvallisen ja automatisoidun pääsyn järjestelmään.
+
+<img width="789" height="370" alt="Näyttökuva 2026-05-05 173949" src="https://github.com/user-attachments/assets/007a71b0-a00f-434f-bcdf-8af1a7ab2d5d" />
+
+
+Ajoin playbookin komennolla:
+
+ansible-playbook -i localhost, -c local users.yml
+
+<img width="825" height="484" alt="Näyttökuva 2026-05-05 173057" src="https://github.com/user-attachments/assets/672d3d2f-3d47-471f-9f01-957f1c8ac959" />
+
+Yllä näkyy, että kaikki tehtävät suoritettiin onnistuneesti ilman virheitä.
+
+Tämän jälkeen testasin käyttäjän toiminnan. Vaihdoin käyttäjään komennolla:
+
+sudo su - anssi
+
+<img width="810" height="47" alt="Näyttökuva 2026-05-05 173244" src="https://github.com/user-attachments/assets/9b5742a9-c22b-4102-bcec-72c1daf217d2" />
+
+Käyttäjä luotiin onnistuneesti ja siihen päästiin siirtymään.
+
+Seuraavaksi testasin sudo-oikeudet komennolla:
+
+sudo ls
+
+<img width="753" height="112" alt="Näyttökuva 2026-05-05 173445" src="https://github.com/user-attachments/assets/c016794d-03c5-4223-a696-2aa46862d8fb" />
+
+Komento toimi ilman salasanakyselyä, mikä osoittaa että sudoless on määritelty oikein.
+
+Tämä ratkaisu on idempotentti, eli playbook voidaan ajaa useita kertoja ilman että järjestelmä menee rikki.
+
 # Lähteet
 - Jeremy Canfield, 2025. | Ansible: create user account: https://www.freekb.net/Article?id=2538
 - Root RouteWay, 2023. | Efficiently Manage Users and Groups with Ansible: A Step-By-Step Guide: https://medium.com/@RootRouteway/efficiently-manage-users-and-groups-with-ansible-a-step-by-step-guide-d72a2b625b60
