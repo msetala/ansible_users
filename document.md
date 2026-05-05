@@ -16,7 +16,7 @@ inventory = hosts.ini
 vault_password_file = .vaultpass.txt
 display_args_to_stdout = true
 ```
-- konfiguraatiotiedossa ilmoitettu vault_password_file osoittaa tiedostoon, jotta ei tarvitse manuaalisesti syöttää komentoa --ask-become-pass playbookia ajaessa.
+- konfiguraatiotiedossa ilmoitettu vault_password_file osoittaa tiedostoon, jotta ei tarvitse manuaalisesti syöttää komentoa `--ask-become-pass` playbookia ajaessa.
 
 - site.yml:
 ```
@@ -46,10 +46,31 @@ display_args_to_stdout = true
 - loput tiedostosta lisättiin sen jälkeen, kun oltiin varmistettu että playbook toimii: kirjataan käyttäjän shell, asetetaan kotihakemisto, ryhmä (tässä tapauksessa "it"), sekä asetetaan `uid`.
 - `append: yes` tarkoittaa, että käyttäjä pysyy aiemmissa ryhmissään, jos lisätään esim. ryhmään it.
 
-- Tähäna asti tehty projekti näyttää seuraavanlaiselta:
+- Tähän asti tehty projekti näyttää seuraavanlaiselta:
 <img width="600" height="276" alt="kuva" src="https://github.com/user-attachments/assets/f717c368-b7ac-4c57-86e1-d2daa42a0ff4" />
 
 - playbookia ajaessa huomattiin, että tulos jäi "changed =1" tilaan. vähän googlatessa huomattiin, että ongelma korjautuu kirjaamalla `main.yml` tiedostoon `update_password: on_create`. vika johtui hashista, joka päivittyi joka kerta playbookia ajaessa muuttaen hashia.
+
+- Päätettiin lisätä uudelle käyttäjälle kotihakemistoonsa oma ansible kansio (työympäristö), ja laitettiin sinne tervehdysviesti.
+- Tämä toteutui luomalla ensin polkuun `/roles/config/files` uusi tiedosto nimeltä `paths.yml`, joka määrittää käyttäjän kotihakemiston:
+<img width="700" height="88" alt="image" src="https://github.com/user-attachments/assets/ee19d0d0-c111-4422-a553-2aa590d2d861" />
+
+- itse play `main.yml` tiedostossa näyttää seuraavanlaiselta:
+<img width="550" height="150" alt="image" src="https://github.com/user-attachments/assets/c457f768-d125-4602-89cc-f49547cec455" />
+
+- viittaukset polkuihin helpottavat tulevaisuudessa, jos esim. polkua tai käyttäjää haluttaisiin muuttaa.
+
+- lisätään playhin vielä tervehdysviesti (testataan että ympäristö toimii): `main.yml` lisätään aiemman kohdan perään tämä:
+
+<img width="443" height="119" alt="image" src="https://github.com/user-attachments/assets/46851e14-5206-471a-ad3b-8999da3cea45" />
+
+- tämäkin tiedosto löytyy `roles/config/files` hakemistosta tekstitiedostona `helloansible.txt`:
+<img width="790" height="44" alt="image" src="https://github.com/user-attachments/assets/03aec757-7c15-4107-be81-6fa4f2f06c13" />
+
+
+
+
+
 
 ## SSH ja sudoless käyttäjän hallinta
 
@@ -107,6 +128,15 @@ sudo ls /
 Komennot toimivat ilman salasanakyselyä, mikä osoittaa että sudoless-konfiguraatio toimii oikein.
 
 Tämä ratkaisu helpottaa järjestelmän hallintaa, koska käyttäjien oikeuksia voidaan hallita ryhmätasolla eikä yksittäisiä käyttäjiä tarvitse määritellä erikseen.
+
+### Lopputuloksen konfiguraatio:
+
+- playbook työn lopussa näyttää seuraavanlaiselta:
+<img width="546" height="379" alt="image" src="https://github.com/user-attachments/assets/96d4e11f-b880-4613-8cc8-05c00b3d2b4d" />
+
+- ja playn recap näyttää ratkaisun olevan idempotentti:
+<img width="1246" height="101" alt="image" src="https://github.com/user-attachments/assets/d5a47052-2d86-477a-aca4-7dd5d9db52da" />
+
 
 # Lähteet
 - Jeremy Canfield, 2025. | Ansible: create user account: https://www.freekb.net/Article?id=2538
