@@ -51,39 +51,61 @@ display_args_to_stdout = true
 
 - playbookia ajaessa huomattiin, että tulos jäi "changed =1" tilaan. vähän googlatessa huomattiin, että ongelma korjautuu kirjaamalla `main.yml` tiedostoon `update_password: on_create`. vika johtui hashista, joka päivittyi joka kerta playbookia ajaessa muuttaen hashia.
 
-## SSH ja sudoless automatisointi
-Lisäsin projektiin SSH-avaimella kirjautumisen sekä sudon käytön ilman salasanaa.
+## SSH ja sudoless käyttäjän hallinta
 
-Toteutin tämän Ansible playbookilla, jossa luodaan käyttäjä, lisätään SSH-avain ja määritellään sudo-oikeudet ilman salasanan kyselyä. Tämä mahdollistaa turvallisen ja automatisoidun pääsyn järjestelmään.
+Tässä tehtävässä konfiguroin käyttäjän hallinnan Ansiblella. Käyttäjälle *anssi* lisättiin SSH-avain ja määriteltiin sudo-oikeudet ilman salasanaa.
 
-<img width="789" height="370" alt="Näyttökuva 2026-05-05 173949" src="https://github.com/user-attachments/assets/007a71b0-a00f-434f-bcdf-8af1a7ab2d5d" />
+<img width="730" height="194" alt="Näyttökuva 2026-05-05 190451" src="https://github.com/user-attachments/assets/c95e11eb-d52c-4e60-a92e-b49fe8cbe6b4" />
 
+
+### Ansible playbookin ajo
 
 Ajoin playbookin komennolla:
 
-ansible-playbook -i localhost, -c local users.yml
+```bash
+ansible-playbook site.yml -c local
+```
+Kaikki tehtävät suoritettiin onnistuneesti ilman virheitä.
 
-<img width="825" height="484" alt="Näyttökuva 2026-05-05 173057" src="https://github.com/user-attachments/assets/672d3d2f-3d47-471f-9f01-957f1c8ac959" />
+<img width="1004" height="668" alt="Näyttökuva 2026-05-05 184215" src="https://github.com/user-attachments/assets/bc7fc36a-18ce-4441-b3fc-bc2e49c7845e" />
 
-Yllä näkyy, että kaikki tehtävät suoritettiin onnistuneesti ilman virheitä.
 
-Tämän jälkeen testasin käyttäjän toiminnan. Vaihdoin käyttäjään komennolla:
+SSH-yhteyden testaus
 
+Lisäsin SSH-avaimen käyttäjälle anssi Ansiblella. Tämä tarkoittaa, että kirjautuminen voidaan tehdä ilman salasanaa käyttäen julkisen ja yksityisen avaimen paria.
+
+Testasin yhteyden komennolla:
+
+```bash
+ssh anssi@localhost
+
+```
+
+<img width="909" height="294" alt="Näyttökuva 2026-05-05 191936" src="https://github.com/user-attachments/assets/a98abdc9-c3f0-40d6-bb52-29343377abb0" />
+
+
+Kirjautuminen onnistui ilman salasanaa, mikä osoittaa että SSH-avain toimii oikein. Tämä parantaa turvallisuutta, koska salasanoja ei tarvitse käyttää eikä niitä voida arvata tai vuotaa.
+
+SSH-avaimiin perustuva kirjautuminen on yleinen käytäntö palvelinympäristöissä.
+
+Sudo ilman salasanaa
+
+Määrittelin sudo-oikeudet ryhmälle "it" Ansiblella. Tämä tehtiin lisäämällä seuraava määritys:
+<img width="730" height="194" alt="Näyttökuva 2026-05-05 190451" src="https://github.com/user-attachments/assets/8f5da495-9785-426a-8e19-ff8fb0ba4d95" />
+
+Määritys "%it ALL=(ALL) NOPASSWD: ALL" tarkoittaa, että kaikki ryhmän "it" käyttäjät voivat suorittaa sudo-komentoja ilman salasanaa.
+
+Testasin tämän komennolla:
+
+```bash
 sudo su - anssi
+sudo ls /
+```
+<img width="735" height="123" alt="Näyttökuva 2026-05-05 184308" src="https://github.com/user-attachments/assets/759801c9-3d37-40ce-a919-23d97dfd42c1" />
 
-<img width="810" height="47" alt="Näyttökuva 2026-05-05 173244" src="https://github.com/user-attachments/assets/9b5742a9-c22b-4102-bcec-72c1daf217d2" />
+Komennot toimivat ilman salasanakyselyä, mikä osoittaa että sudoless-konfiguraatio toimii oikein.
 
-Käyttäjä luotiin onnistuneesti ja siihen päästiin siirtymään.
-
-Seuraavaksi testasin sudo-oikeudet komennolla:
-
-sudo ls
-
-<img width="753" height="112" alt="Näyttökuva 2026-05-05 173445" src="https://github.com/user-attachments/assets/c016794d-03c5-4223-a696-2aa46862d8fb" />
-
-Komento toimi ilman salasanakyselyä, mikä osoittaa että sudoless on määritelty oikein.
-
-Tämä ratkaisu on idempotentti, eli playbook voidaan ajaa useita kertoja ilman että järjestelmä menee rikki.
+Tämä ratkaisu helpottaa järjestelmän hallintaa, koska käyttäjien oikeuksia voidaan hallita ryhmätasolla eikä yksittäisiä käyttäjiä tarvitse määritellä erikseen.
 
 # Lähteet
 - Jeremy Canfield, 2025. | Ansible: create user account: https://www.freekb.net/Article?id=2538
