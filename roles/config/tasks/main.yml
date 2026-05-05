@@ -1,3 +1,9 @@
+- name: create group "it"
+  ansible.builtin.group: 
+    name: it
+    state: present
+    
+ 
 - name: create anssi account
   ansible.builtin.user:
      name: anssi
@@ -10,3 +16,11 @@
      uid: 2002
      append: yes
      
+
+- name: create ansible environment for anssi
+  ansible.builtin.file:
+     path: "{{ folder }}"
+     state: directory
+     owner: "{{ user }}"
+     group: it
+     mode: '0755'
