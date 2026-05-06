@@ -68,8 +68,14 @@ display_args_to_stdout = true
 <img width="790" height="44" alt="image" src="https://github.com/user-attachments/assets/03aec757-7c15-4107-be81-6fa4f2f06c13" />
 
 
+- lisäksi haluttiin testata vielä oikeuksien antoa tiettyihin kansioihin ja applikaatioihin. esimerkiksi otettiin apache2. `main.yml` tuli lisättyä seuraavat pätkät:
+<img width="424" height="305" alt="image" src="https://github.com/user-attachments/assets/9b7f9a62-667b-4ad7-a2e3-7f5460a0e400" />
 
+- ja lisättiin `create anssi account` groups kohtiin www-data:
+<img width="185" height="54" alt="image" src="https://github.com/user-attachments/assets/9428e844-7760-4493-8ebd-18c91e22e5e7" />
 
+- näin assin on mahdollista hallita apachea.
+- `mode: 2775` tarkoittaa että omistaja ja ryhmä voivat kirjoittaa, lukea ja ajaa kansion. `0644` taas tarkoittaa että omistaja ja ryhmä voivat lukea ja kirjoittaa, muut vain lukea.
 
 
 ## SSH ja sudoless käyttäjän hallinta
