@@ -75,7 +75,7 @@ display_args_to_stdout = true
 <img width="185" height="54" alt="image" src="https://github.com/user-attachments/assets/9428e844-7760-4493-8ebd-18c91e22e5e7" />
 
 - näin assin on mahdollista hallita apachea.
-- `mode: 2775` tarkoittaa että omistaja ja ryhmä voivat kirjoittaa, lukea ja ajaa kansion. `0644` taas tarkoittaa että omistaja ja ryhmä voivat lukea ja kirjoittaa, muut vain lukea.
+- `mode: 2775` tarkoittaa että omistaja ja ryhmä voivat kirjoittaa, lukea ja ajaa kansion, muut lukea ja ajaa. `2` eli setGid varmistaa, että kansioon luodut tiedostot perivät kansion ryhmän. `0644` taas tarkoittaa että omistaja ja ryhmä voivat lukea ja kirjoittaa, muut vain lukea.
 
 
 ## SSH ja sudoless käyttäjän hallinta
