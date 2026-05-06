@@ -5,3 +5,4 @@
     - roles/config/files/paths.yml
   roles:
     - config
+    - apache
