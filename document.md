@@ -77,6 +77,21 @@ display_args_to_stdout = true
 - näin assin on mahdollista hallita apachea.
 - `mode: 2775` tarkoittaa että omistaja ja ryhmä voivat kirjoittaa, lukea ja ajaa kansion, muut lukea ja ajaa. `2` eli setGid varmistaa, että kansioon luodut tiedostot perivät kansion ryhmän. `0644` taas tarkoittaa että omistaja ja ryhmä voivat lukea ja kirjoittaa, muut vain lukea.
 
+- ansiblen tulee varmistaa vielä apachen asennus. näinpä teimme uuden kansion rooleihin: `mkdir roles/apache`, joka sai erikseen kansiot `tasks`, `files`, ja `handlers`.
+
+- files-kansion `example.com.conf:`
+<img width="700" height="195" alt="kuva" src="https://github.com/user-attachments/assets/2e04d879-cf23-40fd-9c9b-068e0f96397f" />
+
+- tasks-kansion `main.yml`:
+<img width="600" height="371" alt="kuva" src="https://github.com/user-attachments/assets/6ab38226-172e-4686-b249-fbbd106bc6bf" />
+
+- ja handlers-kansion `main.yml`:
+<img width="300" height="83" alt="kuva" src="https://github.com/user-attachments/assets/08299329-684e-4ac2-80ce-173decad5ad5" />
+
+- nyt playbookin ajon jälkeen http://localhost näyttä seuraavaa:
+<img width="434" height="167" alt="kuva" src="https://github.com/user-attachments/assets/26937058-d8e0-4c37-b40f-ebe72fe03f89" />
+
+
 
 ## SSH ja sudoless käyttäjän hallinta
 
@@ -138,10 +153,12 @@ Tämä ratkaisu helpottaa järjestelmän hallintaa, koska käyttäjien oikeuksia
 ### Lopputuloksen konfiguraatio:
 
 - playbook työn lopussa näyttää seuraavanlaiselta:
-<img width="546" height="379" alt="image" src="https://github.com/user-attachments/assets/96d4e11f-b880-4613-8cc8-05c00b3d2b4d" />
+<img width="525" height="536" alt="kuva" src="https://github.com/user-attachments/assets/9e317711-0ccd-4edb-959b-6977172e0802" />
+
 
 - ja playn recap näyttää ratkaisun olevan idempotentti:
-<img width="1246" height="101" alt="image" src="https://github.com/user-attachments/assets/d5a47052-2d86-477a-aca4-7dd5d9db52da" />
+<img width="800" height="91" alt="kuva" src="https://github.com/user-attachments/assets/d5c38c3d-6efc-499a-9037-88e1ed6ca9b1" />
+
 
 
 # Lähteet
