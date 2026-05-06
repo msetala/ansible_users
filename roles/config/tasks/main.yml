@@ -12,10 +12,11 @@
      state: present
      shell: /bin/bash
      home: /home/anssi
-     groups: it
+     groups:
+       -  it
+       - www-data
      uid: 2002
      append: yes
-     
 
 - name: create ansible environment for anssi
   ansible.builtin.file:
@@ -42,3 +43,20 @@
     dest: /etc/sudoers.d/anssi
     content: "%it ALL=(ALL) NOPASSWD: ALL"
     mode: '0440'
+
+- name: give rights to www-folder
+  ansible.builtin.file:
+    path: /var/www/html
+    state: directory
+    owner: www-data
+    group: www-data
+    mode: '2775'
+
+- name: copy web template
+  ansible.builtin.template:
+    src: templates/index.html.j2
+    dest: /var/www/html/index.html
+    owner: www-data
+    group: www-data
+    mode: '0664'
+
