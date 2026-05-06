@@ -5,4 +5,4 @@
 
 - demo: https://youtu.be/ShA2Ik32igY
 - Note: to create an encrypted password yourself, make sure to replace the hashed password with your own using ansible-vault.
-To install, use git `git clone`.
+To install, use git `git clone` or download zip.
