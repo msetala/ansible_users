@@ -1,0 +1,10 @@
+- name: unlock user
+  hosts: all
+  become: true
+
+  tasks:
+    - name: "enable shell for user"
+      user:
+        name: "anssi"
+        shell: /bin/bash
+        state: present

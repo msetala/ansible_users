@@ -1,0 +1,11 @@
+- name: lock user account
+  hosts: all
+  become: true
+ 
+
+  tasks: 
+    - name: "disable shell for user"
+      user:
+        name: "anssi"
+        shell: /usr/sbin/nologin
+        remove: no
