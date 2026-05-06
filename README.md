@@ -7,3 +7,4 @@
 ### how to use
 
 - in order to use this playbook, make sure you create your own ansible-vault password, and replace the one in files/secret.yml with your own. to change the name of the account, go to roles/config/tasks/main.yml and change the name to your desired user.
+- install with `git clone`, or download zip.
